@@ -8,7 +8,7 @@ export const SaveableTextInput = () => {
 
   const saveTextToStorage = useDebounce((text:string) => {
     storageAPI.save(text);
-  }, 1000);
+  }, 500);
 
   const handleUpdate = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     isTextEdited.current = true;

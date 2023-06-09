@@ -8,7 +8,7 @@ export const useDebounce = <Fn extends (...args: any[]) => any>(fn: Fn, ms: numb
   const debouncedFn = useMemo(() => {
     return debounce((...args:Parameters<Fn>) => {
       memoizedFn(...args)
-    }, 1000)
+    }, ms)
   }, [ms])
 
   useEffect(() => () => {
