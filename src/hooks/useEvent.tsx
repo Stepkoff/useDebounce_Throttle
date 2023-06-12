@@ -1,18 +1,16 @@
 import {useCallback, useLayoutEffect, useRef} from "react";
 
-
-export const useEvent = <T extends (...args: any[])=> any>(fn:T) => {
+// eslint-disable-next-line @typescript-eslint/ban-types
+export const useEvent = <T extends Function>(fn: T) => {
   const fnRef = useRef(fn);
-  
   useLayoutEffect(() => {
     fnRef.current = fn;
   }, [fn]);
-  
   const eventCb = useCallback(
-    (...args: Parameters<T>) => {
+    (...args: unknown[]) => {
       return fnRef.current.apply(null, args);
-    }, [fnRef]
-  )
-  
+    },
+    [fnRef]
+  );
   return eventCb as unknown as T;
-}
+};

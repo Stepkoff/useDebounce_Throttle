@@ -1,20 +1,26 @@
 
 export const rafThrottle = <T extends (...args: any[]) => any>(fn: T) => {
-  let rafId:number|null = null;
+  let rafId: number | null = null;
 
-  const throttled = (...args:Parameters<T>) => {
-    if(typeof rafId === 'number') return;
+  function throttled(...args: Parameters<T>) {
+    if (typeof rafId === "number") {
+      console.log("cancel");
+      return;
+    }
 
     rafId = requestAnimationFrame(() => {
-      fn.apply(null, args);
+      // fn.apply(null, args);
+      fn(...args)
       rafId = null;
-    })
+    });
   }
 
   throttled.cancel = () => {
-    if(typeof rafId !== 'number') return;
+    if (typeof rafId !== "number") {
+      return;
+    }
     cancelAnimationFrame(rafId);
-  }
+  };
 
   return throttled;
 }
